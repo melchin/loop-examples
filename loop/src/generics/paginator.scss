@@ -1,0 +1,28 @@
+@import "src/styles/colors.scss";
+
+.paginator-container {
+  display: flex;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+  color: $grey;
+  white-space: nowrap;
+  padding: 0 2px;
+  width: 100%;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+.paginator-right-arrow,
+.paginator-left-arrow {
+  cursor: pointer;
+  padding: 0 20px;
+  flex: 0 0 auto;
+}
+.paginator-label {
+  font-weight: bold;
+  white-space: nowrap;
+}
+.paginator-arrow-disabled {
+  opacity: 0.3;
+  cursor: default !important;
+}

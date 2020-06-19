@@ -16,3 +16,4 @@ export {
   useMouseContextMenu,
   useMouseHover,
 } from "./events/useMouse";
+export { default as useCustomStyles } from "./styles/useCustomStyles";

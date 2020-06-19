@@ -12,7 +12,7 @@ const getValid = (
 
 type Sass = { [className: string]: string };
 
-export const useCustomStyles = (
+const useCustomStyles = (
   sass: Sass,
   customSass: Sass,
   name: keyof Sass
@@ -20,3 +20,5 @@ export const useCustomStyles = (
   const _classes = useRef<string[]>(getValid(sass[name], customSass[name]));
   return _classes.current;
 };
+
+export default useCustomStyles;
