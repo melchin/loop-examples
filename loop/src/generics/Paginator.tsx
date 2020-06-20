@@ -94,7 +94,7 @@ export const usePaginatorStyles = (args: {
     } else {
       leftArrowRef.current?.classList.remove(...paginatorDisabled);
     }
-  }, [isFirstPage]);
+  }, [isFirstPage, paginatorDisabled, leftArrowRef]);
 
   useLayoutEffect(() => {
     if (isLastPage) {
@@ -102,19 +102,26 @@ export const usePaginatorStyles = (args: {
     } else {
       rightArrowRef.current?.classList.remove(...paginatorDisabled);
     }
-  }, [isLastPage]);
+  }, [isLastPage, paginatorDisabled, rightArrowRef]);
 
   useLayoutEffect(() => {
     containerRef.current?.classList.add(...paginatorContainer);
     leftArrowRef.current?.classList.add(...paginatorLeftArrow);
     labelRef.current?.classList.add(...paginatorLabel);
     rightArrowRef.current?.classList.add(...paginatorRightArrow);
-  }, []);
+  }, [
+    containerRef,
+    leftArrowRef,
+    labelRef,
+    rightArrowRef,
+    paginatorContainer,
+    paginatorLabel,
+    paginatorLeftArrow,
+    paginatorRightArrow,
+  ]);
 };
 
 const Paginator: React.FC<Props> = (props) => {
-  console.log("Classes", classes);
-  console.log("Require", require("./paginator.scss"));
   const {
     pageIndex,
     setPageIndex,
