@@ -1,4 +1,5 @@
 @import "src/styles/colors.scss";
+@import "src/generics/generic.scss";
 
 .paginator-container {
   display: flex;
@@ -21,6 +22,7 @@
 .paginator-label {
   font-weight: bold;
   white-space: nowrap;
+  @extend .no-select;
 }
 .paginator-arrow-disabled {
   opacity: 0.3;

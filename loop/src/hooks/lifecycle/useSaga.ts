@@ -4,6 +4,7 @@ import React from "react";
 // Types
 import { Saga } from "redux-saga";
 
+// Free API that I can use for testing data: https://jsonplaceholder.typicode.com/users
 const useSaga = (saga: Saga) => [false, null];
 
 export function withSaga(saga: Saga) {
