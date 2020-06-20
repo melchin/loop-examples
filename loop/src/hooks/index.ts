@@ -1,7 +1,4 @@
-export {
-  default as useEventListener,
-  Handler,
-} from "./events/useEventListener";
+export { default as useEventListener } from "./events/useEventListener";
 export {
   default as useMouse,
   useMouseClick,

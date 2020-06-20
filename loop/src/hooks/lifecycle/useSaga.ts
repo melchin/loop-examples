@@ -4,7 +4,7 @@ import React from "react";
 // Types
 import { Saga } from "redux-saga";
 
-const useSaga = () => [];
+const useSaga = (saga: Saga) => [false, null];
 
 export function withSaga(saga: Saga) {
   /**
