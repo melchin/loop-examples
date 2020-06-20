@@ -113,6 +113,8 @@ export const usePaginatorStyles = (args: {
 };
 
 const Paginator: React.FC<Props> = (props) => {
+  console.log("Classes", classes);
+  console.log("Require", require("./paginator.scss"));
   const {
     pageIndex,
     setPageIndex,
