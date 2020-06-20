@@ -2,7 +2,7 @@
 import React, { useCallback, useLayoutEffect, useRef } from "react";
 
 // SVGs
-import fillArrowLeft from "svg-inline-loader?images/svg/arrow-left.svg";
+import fillArrowLeft from "images/svg/arrow-left.svg";
 import fillArrowRight from "images/svg/arrow-right.svg";
 
 // Components
@@ -156,7 +156,7 @@ const Paginator: React.FC<Props> = (props) => {
           <div ref={labelRef}>{labelRenderer(translation)}</div>
           <div ref={rightArrowRef} onClick={onNext}>
             <SVG
-              src={arrows.rightSrc()}
+              src={arrows.rightSrc}
               size={arrows.size}
               color={arrows.color}
             />
