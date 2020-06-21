@@ -6,16 +6,20 @@
 export const emptyObject: { [key: string]: any } = {};
 export const emptyArray: Array<any> = [];
 
-export function emptyArrayOr<T extends []>(maybeArray: T | undefined | null) {
+export function emptyArrayOr<T extends any[]>(
+  maybeArray: T | undefined | null
+) {
   if (maybeArray && maybeArray.length) {
     return maybeArray;
   }
-  return emptyArray;
+  return emptyArray as T;
 }
 
-export function emptyObjectOr<T extends {}>(maybeObj: T | undefined | null) {
+export function emptyObjectOr<T extends { [key: string]: any }>(
+  maybeObj: T | undefined | null
+): T {
   if (maybeObj && Object.keys(maybeObj).length) {
     return maybeObj;
   }
-  return emptyObject;
+  return emptyObject as T;
 }

@@ -5,7 +5,7 @@ import InlineSvgReact from "svg-inline-react";
 interface Props {
   src: string;
   size?: number;
-  color: string;
+  color?: string;
 }
 
 const styles = {
