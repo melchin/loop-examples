@@ -1,0 +1,9 @@
+@import "src/styles/colors.scss";
+@import "./generic.scss";
+
+.mask-container {
+  @extend .absolute-0;
+  @extend .flex-centered;
+  z-index: 10000;
+  background-color: rgba($white, 0.7);
+}

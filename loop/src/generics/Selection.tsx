@@ -1,21 +1,20 @@
 // Libs
 import chunk from "lodash/chunk";
 import React, { useState } from "react";
-import { FormattedMessage, IntlFormatters, injectIntl } from "react-intl";
+import { FormattedMessage, IntlShape, injectIntl } from "react-intl";
 import { createSelector } from "reselect";
 
 // Components
-import Mask from "fc-masks";
-import { TextField } from "zeplin-components";
+import Mask from "./Mask";
+import TextField from "./TextField";
 import Paginator from "./Paginator";
 import SVG from "./SVG";
 
 // Hooks
-import { usePage } from "../../hooks";
+import { usePage } from "./hooks/selection";
 
 // Utils
-import { emptyArrayOr, messages } from "utils";
-import getIcon from "fc-icons/src/command-center/getIcon";
+import { emptyArrayOr, getIcon, messages } from "utils";
 
 // Styles
 import classes from "./styles/selection.scss";
@@ -24,7 +23,7 @@ export interface Props<T extends { id: number }, X> {
   items: T[];
   itemsSelected: { [key: number]: X };
   isBusy: boolean;
-  intl: IntlFormatters;
+  intl: IntlShape;
   filterItems: (searchValue: string) => (item: T) => boolean;
   selectItems: (ids: number[], deselect: boolean) => void;
   labelKey: string;
@@ -45,10 +44,7 @@ export const isTranslatable = (
   return !!messages?.[label as keyof typeof messages];
 };
 
-const translate = (
-  label: string | keyof typeof messages,
-  intl: IntlFormatters
-) => {
+const translate = (label: string | keyof typeof messages, intl: IntlShape) => {
   if (isTranslatable(label)) {
     return intl.formatMessage(messages[label]);
   }
@@ -63,7 +59,7 @@ const getLabelKey = (props: Props<any, any>) => props.labelKey;
 const getTranslatedItems = createSelector(
   [getItems, getIntl, getTranslated, getLabelKey],
   (items, intl, translated, labelKey) => {
-    if (translated && _.size(items)) {
+    if (translated && items.length) {
       return items.map((item) => ({
         ...item,
         [labelKey]: translate(item[labelKey], intl),
@@ -96,7 +92,7 @@ const Selection: React.FC<Props<any, any>> = (props) => {
 
   const selectedRecordRows: JSX.Element[] = [];
 
-  const recordRows = _.map(records, (record, index) => {
+  const recordRows = records.map((record, index) => {
     const row = (
       <div
         key={index}
@@ -157,7 +153,7 @@ interface SelectAllProps {
 
 const SelectAll: React.FC<SelectAllProps> = (props) => {
   if (props.show) {
-    const disabled = !_.size(props.records);
+    const disabled = !props.records.length;
     return (
       <div
         className={classes["cc-selection-selectAll"]}
@@ -184,7 +180,7 @@ interface PageProps {
 }
 
 const getRecords = (props: PageProps) => emptyArrayOr(props.records);
-const getPerPage = (props: PageProps) => props.perPage ?? 100;
+const getPerPage = (props: PageProps) => props.perPage ?? 10;
 const getPages = createSelector(
   [getRecords, getPerPage],
   (

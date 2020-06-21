@@ -12,7 +12,7 @@ import { FormattedMessage, MessageDescriptor } from "react-intl";
 // Styles
 import { grey } from "styles/colors";
 import { useCustomStyles } from "hooks";
-import classes from "./paginator.scss";
+import classes from "./styles/paginator.scss";
 
 // Utils
 import { emptyObject, messages, withCommas } from "utils";

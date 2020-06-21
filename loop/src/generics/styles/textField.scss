@@ -1,0 +1,57 @@
+@import "styles/colors.scss";
+@import "./generic.scss";
+
+.text-field-container {
+  display: flex;
+  background-color: $white;
+  border-radius: 100px;
+  border: 1px solid $grey;
+}
+
+.text-field-input {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: $grey;
+  width: 100%;
+  padding-right: 10px;
+}
+
+.text-field-icon {
+  color: inherit;
+}
+
+.text-field-placeholder {
+  opacity: 0.6;
+}
+
+.text-field-container-disabled {
+  opacity: 0.3;
+} // Text Field
+.text-field-container {
+  display: flex;
+  background-color: $white;
+  border-radius: 100px;
+  border: 1px solid $grey;
+}
+
+.text-field-input {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: $grey;
+  width: 100%;
+  padding-right: 10px;
+}
+
+.text-field-icon {
+  color: inherit;
+}
+
+.text-field-placeholder {
+  opacity: 0.6;
+}
+
+.text-field-container-disabled {
+  @extend .disabled;
+}

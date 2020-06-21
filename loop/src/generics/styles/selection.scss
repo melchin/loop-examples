@@ -1,0 +1,16 @@
+@import "./generic.scss";
+
+.selection-checkbox {
+  cursor: pointer;
+  padding-right: 10px;
+}
+
+.selection-item {
+  flex: 1 1 auto;
+  align-items: center;
+  cursor: pointer;
+}
+
+.is-disabled {
+  @extend .disabled;
+}
