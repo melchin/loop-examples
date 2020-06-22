@@ -3,7 +3,7 @@
 
 .paginator-container {
   display: flex;
-  height: 22px;
+  min-height: 50px;
   align-items: center;
   justify-content: center;
   color: $grey;

@@ -1,4 +1,3 @@
-import xor from "lodash/xor";
 import React, { useState, useCallback } from "react";
 import { IntlProvider } from "react-intl";
 
@@ -59,19 +58,17 @@ function App() {
 
   return (
     <IntlProvider locale={"en"}>
-      <div className="App">
-        <Selection
-          items={people}
-          itemsSelected={selectedPeople}
-          filterItems={filterItems}
-          selectItems={selectItems}
-          labelKey={"label"}
-          perPage={8}
-          isBusy={false}
-          translated
-          paginated
-        />
-      </div>
+      <Selection
+        items={people}
+        itemsSelected={selectedPeople}
+        filterItems={filterItems}
+        selectItems={selectItems}
+        labelKey={"label"}
+        perPage={8}
+        isBusy={false}
+        translated
+        paginated
+      />
     </IntlProvider>
   );
 }

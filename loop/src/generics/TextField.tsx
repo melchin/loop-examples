@@ -21,6 +21,7 @@ import { SVG } from "generics";
 // Styles
 import { useCustomStyles } from "hooks";
 import classes from "./styles/textField.scss";
+import colors from "styles/colors";
 
 type Event = React.FormEvent<HTMLInputElement>;
 type EventHandler = (e: Event) => void;
@@ -141,18 +142,19 @@ export const TextField: React.FC<Props> = (props) => {
     customSass,
   });
 
-  const onChange = useRef(
-    debounce((e: Event) => {
+  let onChange = useCallback(
+    (e: Event) => {
       setText(e?.currentTarget?.value ?? "");
       if (_onChange) {
         _onChange(e);
       }
-    }, timeout)
+    },
+    [_onChange]
   );
 
   useEffect(() => {
-    onChange.current = debounce(_onChange, timeout);
-  }, [_onChange, timeout]);
+    onChange = debounce(onChange, timeout);
+  }, [onChange]);
 
   const onBlur = useCallback(
     (e: Event) => {
@@ -191,16 +193,16 @@ export const TextField: React.FC<Props> = (props) => {
   return (
     <FormattedMessage {...placeholder}>
       {(translation) => (
-        <div ref={containerRef} data-test={"Zeplin-TextField"}>
+        <div ref={containerRef}>
           <div ref={iconRef}>
-            <SVG src={searchSvg} />
+            <SVG src={searchSvg} size={18} color={colors.grey()} />
           </div>
           <input
             ref={inputRef}
             type="text"
             value={getValue(translation as string)}
             onBlur={onBlur}
-            onChange={onChange.current}
+            onChange={onChange}
             onFocus={onFocus}
             disabled={disabled}
             {...extendInputProps}

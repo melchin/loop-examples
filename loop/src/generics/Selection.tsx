@@ -96,13 +96,13 @@ const Selection: React.FC<Props<any, any>> = (props) => {
     const row = (
       <div
         key={index}
-        className={classes["cc-selection-row"]}
+        className={classes["selection-row"]}
         onClick={record.onClick}
       >
-        <div className={"selection-checkbox"}>
+        <div className={classes["selection-checkbox"]}>
           <SVG src={getIcon(record.isSelected).checkbox} />
         </div>
-        <div className={"selection-item"}>
+        <div className={classes["selection-item"]}>
           <span>{record[props.labelKey]}</span>
         </div>
       </div>
@@ -120,8 +120,8 @@ const Selection: React.FC<Props<any, any>> = (props) => {
   };
 
   return (
-    <React.Fragment>
-      <div className={classes["cc-selection-textFieldContainer"]}>
+    <div className={classes["selection-container"]}>
+      <div className={classes["selection-textFieldContainer"]}>
         <TextField onChange={onChangeSearch} value={searchValue} />
       </div>
       <SelectAll
@@ -139,7 +139,7 @@ const Selection: React.FC<Props<any, any>> = (props) => {
         messageKeys={messageKeys}
       />
       <Mask enabled={props.isBusy} />
-    </React.Fragment>
+    </div>
   );
 };
 
@@ -154,15 +154,13 @@ interface SelectAllProps {
 const SelectAll: React.FC<SelectAllProps> = (props) => {
   if (props.show) {
     const disabled = !props.records.length;
+    const disabledClass = `${disabled ? " " + classes["is-disabled"] : ""}`;
     return (
-      <div
-        className={classes["cc-selection-selectAll"]}
-        onClick={props.onClick}
-      >
-        <div className={`selection-checkbox${disabled ? " is-disabled" : ""}`}>
+      <div className={classes["selection-selectAll"]} onClick={props.onClick}>
+        <div className={`${classes["selection-checkbox"]}${disabledClass}`}>
           <SVG src={getIcon(props.checked).checkbox} />
         </div>
-        <div className={`selection-item${disabled ? " is-disabled" : ""}`}>
+        <div className={`${classes["selection-item"]}${disabledClass}`}>
           <FormattedMessage {...messages[props.messageKeys.selectAll]} />
         </div>
       </div>
@@ -198,13 +196,12 @@ const Page: React.FC<PageProps> = (props) => {
   const records = getRecords(props);
   const numRecords = records.length;
 
-  const classPaginated = !props.paginated ? " paginator-off" : "";
-  const className = `page${classPaginated}`;
-
   if (numRecords) {
     return (
-      <div className={classes[className]}>
-        {props.paginated ? page : records}
+      <React.Fragment>
+        <div className={classes["selection-page"]}>
+          {props.paginated ? page : records}
+        </div>
         {props.paginated && (
           <Paginator
             totalRecords={numRecords}
@@ -213,12 +210,12 @@ const Page: React.FC<PageProps> = (props) => {
             pageIndex={pageIndex}
           />
         )}
-      </div>
+      </React.Fragment>
     );
   }
 
   return (
-    <div className={classes["cc-selection-message"]}>
+    <div className={classes["selection-message"]}>
       <FormattedMessage {...messages[props.messageKeys.noOptions]} />
     </div>
   );

@@ -158,7 +158,7 @@ const Paginator: React.FC<Props> = (props) => {
   return (
     <FormattedMessage {...message} values={{ onPage, ofPage }}>
       {(translation) => (
-        <div ref={containerRef} data-test={"Zeplin-Paginator"}>
+        <div ref={containerRef}>
           <div ref={leftArrowRef} onClick={onPrev}>
             <SVG src={arrows.leftSrc} size={arrows.size} color={arrows.color} />
           </div>
