@@ -1,32 +1,40 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { IntlProvider } from "react-intl";
 
 import { Selection } from "generics";
 
-const people = [
-  { id: 1, label: "brad" },
-  { id: 2, label: "brayden" },
-  { id: 3, label: "owen" },
-  { id: 4, label: "oscar" },
-  { id: 5, label: "steve" },
-  { id: 6, label: "steven" },
-  { id: 7, label: "stevo" },
-  { id: 8, label: "kyle" },
-  { id: 9, label: "karen" },
-  { id: 10, label: "andrea" },
-  { id: 11, label: "becky" },
-  { id: 12, label: "sharon" },
-  { id: 13, label: "kacey" },
-  { id: 14, label: "jenna" },
-  { id: 15, label: "jesse" },
-  { id: 16, label: "ryan" },
-  { id: 17, label: "renold" },
-];
+let breedId = 1;
+const breedIdNext = () => breedId++;
 
 function App() {
+  const [dogBreeds, setDogBreeds] = useState<
+    Array<{ id: number; label: string }>
+  >([]);
   const [selectedPeople, setSelectedPeople] = useState<{
     [id: string]: boolean;
   }>({});
+
+  useEffect(() => {
+    const controller = new AbortController();
+    try {
+      fetch("https://dog.ceo/api/breeds/list/all", {
+        signal: controller.signal,
+      })
+        .then((response) => response.json())
+        .then(({ message }: any) => {
+          return Object.keys(message);
+        })
+        .then((breeds) => {
+          setDogBreeds(
+            breeds.map((breed) => ({ id: breedIdNext(), label: breed }))
+          );
+        });
+    } catch (e) {
+      setDogBreeds([]);
+    }
+
+    return () => controller.abort();
+  }, []);
 
   const selectItems = useCallback((ids: number[], deselect: boolean) => {
     const updatedSelections = ids.reduce((acc: any, id: number) => {
@@ -34,9 +42,9 @@ function App() {
       return acc;
     }, {});
 
-    setSelectedPeople((selectedPeople) => {
+    setSelectedPeople((selectedBreeds) => {
       const nextSelections = {
-        ...selectedPeople,
+        ...selectedBreeds,
         ...updatedSelections,
       };
 
@@ -59,12 +67,12 @@ function App() {
   return (
     <IntlProvider locale={"en"}>
       <Selection
-        items={people}
+        items={dogBreeds}
         itemsSelected={selectedPeople}
         filterItems={filterItems}
         selectItems={selectItems}
         labelKey={"label"}
-        perPage={8}
+        perPage={30}
         isBusy={false}
         translated
         paginated
