@@ -13,4 +13,5 @@ export {
   useMouseContextMenu,
   useMouseHover,
 } from "./events/useMouse";
+export { default as useViewport } from "./events/useViewport";
 export { default as useCustomStyles } from "./styles/useCustomStyles";

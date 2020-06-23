@@ -19,4 +19,15 @@ export default {
     defaultMessage: "No Options",
     description: "Selection Label",
   },
+  loading: {
+    id: "mask-loading",
+    defaultMessage: "Loading...",
+    description: "Indicator that something is loading.",
+  },
+  selectSomeBreeds: {
+    id: "helper-message-selectSomeBreeds",
+    defaultMessage:
+      "Select a breed from the following list to reveal a random dog image of that breed.",
+    description: "Helper message",
+  },
 };

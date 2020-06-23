@@ -1,6 +1,11 @@
 // Libs
 import chunk from "lodash/chunk";
-import React, { useState } from "react";
+import React, {
+  CSSProperties as CSS,
+  useLayoutEffect,
+  useState,
+  useCallback,
+} from "react";
 import { FormattedMessage, IntlShape, injectIntl } from "react-intl";
 import { createSelector } from "reselect";
 
@@ -18,6 +23,13 @@ import { emptyArrayOr, getIcon, messages } from "utils";
 
 // Styles
 import classes from "./styles/selection.scss";
+import { useViewport } from "hooks";
+
+const styles = {
+  vh: (height: string | number): CSS => ({
+    height,
+  }),
+};
 
 export interface Props<T extends { id: number }, X> {
   items: T[];
@@ -72,6 +84,10 @@ const getTranslatedItems = createSelector(
 const Selection: React.FC<Props<any, any>> = (props) => {
   const { selectItems } = props;
 
+  const [pageIndex, setPageIndex] = useState<number>(0);
+
+  const viewport = useViewport();
+
   const selectHandler = React.useCallback(
     (ids: number[], deselect: boolean) => selectItems(ids, deselect),
     [selectItems]
@@ -88,6 +104,14 @@ const Selection: React.FC<Props<any, any>> = (props) => {
     props.itemsSelected,
     props.filterItems,
     selectHandler
+  );
+
+  const _onChangeSearch = useCallback(
+    (e: React.FormEvent<HTMLInputElement>) => {
+      setPageIndex(0);
+      onChangeSearch(e);
+    },
+    [onChangeSearch]
   );
 
   const selectedRecordRows: JSX.Element[] = [];
@@ -120,9 +144,12 @@ const Selection: React.FC<Props<any, any>> = (props) => {
   };
 
   return (
-    <div className={classes["selection-container"]}>
+    <div
+      style={styles.vh(viewport.height)}
+      className={classes["selection-container"]}
+    >
       <div className={classes["selection-textFieldContainer"]}>
-        <TextField onChange={onChangeSearch} value={searchValue} />
+        <TextField onChange={_onChangeSearch} value={searchValue} />
       </div>
       <SelectAll
         checked={allSelected}
@@ -137,6 +164,8 @@ const Selection: React.FC<Props<any, any>> = (props) => {
         records={recordRows}
         perPage={props.perPage}
         messageKeys={messageKeys}
+        pageIndex={pageIndex}
+        setPageIndex={setPageIndex}
       />
       <Mask enabled={props.isBusy} />
     </div>
@@ -175,6 +204,8 @@ interface PageProps {
   records: JSX.Element[];
   perPage?: Props<any, any>["perPage"];
   messageKeys: { [key: string]: keyof typeof messages };
+  pageIndex: number;
+  setPageIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const getRecords = (props: PageProps) => emptyArrayOr(props.records);
@@ -190,7 +221,7 @@ const getPages = createSelector(
 );
 
 const Page: React.FC<PageProps> = (props) => {
-  const [pageIndex, setPageIndex] = useState<number>(0);
+  const { pageIndex, setPageIndex } = props;
 
   const page = getPages(props)[pageIndex];
   const records = getRecords(props);

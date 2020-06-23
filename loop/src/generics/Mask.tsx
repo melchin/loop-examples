@@ -2,10 +2,11 @@
 import * as React from "react";
 
 // Components
-import Spinner from "react-spinkit";
+import { FormattedMessage } from "react-intl";
 
 // Style
 import classes from "./styles/mask.scss";
+import { messages } from "utils";
 
 const Mask: React.FC<{ enabled?: boolean }> = (props) => {
   if (!props.enabled) {
@@ -14,7 +15,7 @@ const Mask: React.FC<{ enabled?: boolean }> = (props) => {
 
   return (
     <div className={classes["mask-container"]}>
-      <Spinner name={"ball-spin-fade-loader"} />
+      <FormattedMessage {...messages.loading} />
     </div>
   );
 };
